@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNF 115版本 - 装备套装工具</title>
+    <link rel="stylesheet" href="./static/css/base.css">
+    <link rel="stylesheet" href="./static/css/dnf-style.css">
+    <link rel="stylesheet" href="./static/css/page/rank.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background-color: #1a1a1a;
+            color: #c0c0c0;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        .set-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .set-card {
+            background: #222;
+            border: 2px solid #8b7355;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .set-card:hover {
+            border-color: #ffd700;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        .set-card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+            object-fit: contain;
+        }
+        .set-card h3 {
+            color: #ffd700;
+            margin-bottom: 5px;
+            font-size: 18px;
+        }
+        .set-alias {
+            color: #c0c0c0;
+            font-size: 14px;
+            font-style: italic;
+        }
+        .set-tier {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 2px 8px;
+            background: #8b7355;
+            color: #1a1a1a;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+        .dnf-header {
+            background: #111;
+            padding: 15px 20px;
+            border-bottom: 2px solid #8b7355;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            width: 60px;
+            height: 60px;
+        }
+        .banner {
+            background: url("./static/img/bg/banner-bg.jpg") center/cover no-repeat;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        .banner-content h2 {
+            color: #ffd700;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .banner-content p {
+            color: #c0c0c0;
+            font-size: 18px;
+        }
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        .function-nav {
+            margin-bottom: 40px;
+        }
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            padding: 10px 0;
+        }
+        .nav-card {
+            background: #222;
+            border: 2px solid #8b7355;
+            border-radius: 8px;
+            padding: 25px 15px;
+            text-align: center;
+            color: #ffd700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .nav-card:hover {
+            border-color: #ffd700;
+            background: #2a2a2a;
+        }
+        .set-showcase h2 {
+            color: #ffd700;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 2px solid #8b7355;
+            padding-bottom: 10px;
+        }
+        .set-category {
+            margin: 40px 0 20px;
+            color: #ffd700;
+            font-size: 22px;
+            padding-left: 10px;
+            border-left: 4px solid #8b7355;
+        }
+        @media (max-width: 768px) {
+            .header-content h1 {
+                font-size: 20px;
+            }
+            .banner-content h2 {
+                font-size: 24px;
+            }
+            .set-showcase h2 {
+                font-size: 24px;
+            }
+            .set-category {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航 -->
+    <header class="dnf-header">
+        <div class="header-content">
+            <img src="./static/img/logo/dnf-logo.png" alt="DNF Logo" class="logo" onerror="this.src='./static/img/logo/default-logo.png'">
+            <h1>115版本装备套装工具</h1>
+        </div>
+    </header>
+
+    <!-- Banner区域 -->
+    <section class="banner">
+        <div class="banner-content">
+            <h2>重力之泉版本 · 套装搭配指南</h2>
+            <p>专业的装备套装查询与分析工具</p>
+        </div>
+    </section>
+
+    <!-- 功能导航 -->
+    <main class="main-content">
+        <nav class="function-nav">
+            <div class="nav-grid">
+                <a href="./page/rank.html" class="nav-card">
+                    <h3>强度排行</h3>
+                    <p>多维度套装强度排行</p>
+                </a>
+                <a href="./page/query.html" class="nav-card">
+                    <h3>套装查询</h3>
+                    <p>搜索与浏览套装属性</p>
+                </a>
+                <a href="./page/compare.html" class="nav-card">
+                    <h3>套装对比</h3>
+                    <p>双套/多套属性对比</p>
+                </a>
+            </div>
+        </nav>
+
+        <!-- 套装展示区域 -->
+        <section class="set-showcase">
+            <h2>太初阶段套装大全</h2>
+            
+            <h3 class="set-category">核心毕业套装</h3>
+            <div class="set-grid">
+                <div class="set-card" onclick="location.href='./page/detail.html?set=gold'">
+                    <img src="./static/img/logo/set-icon/gold-set.png" alt="理想之黄金乡套装" onerror="this.src='./static/img/logo/set-icon/default-set.png'">
+                    <h3>理想之黄金乡套装</h3>
+                    <p class="set-alias">俗称"恍惚套"</p>
+                    <span class="set-tier">顶级打造</span>
+                </div>
+                <div class="set-card" onclick="location.href='./page/detail.html?set=dragon'">
+                    <img src="./static/img/logo/set-icon/dragon-set.png" alt="龙战八荒套装" onerror="this.src='./static/img/logo/set-icon/default-set.png'">
+                    <h3>龙战八荒套装</h3>
+                    <p class="set-alias">俗称"无色套"</p>
+                    <span class="set-tier">顶级打造</span>
+                </div>
+                <div class="set-card" onclick="location.href='./page/detail.html?set=energy_3'">
+                    <img src="./static/img/logo/set-icon/energy3-set.png" alt="究极能量套装（3觉）" onerror="this.src='./static/img/logo/set-icon/default-set.png'">
+                    <h3>究极能量套装（3觉）</h3>
+                    <p class="set-alias">三觉极限套</p>
+                    <span class="set-tier">顶级打造</span>
+                </div>
+                <div class="set-card" onclick="location.href='./page/detail.html?set=valkyrie'">
+                    <img src="./static/img/logo/set-icon/valkyrie-set.png" alt="诸神黄昏之女武神" onerror="this.src='./static/img/logo/set-icon/default-set.png'">
+                    <h3>诸神黄昏之女武神</h3>
+                    <p class="set-alias">持续输出套</p>
+                    <span class="set-tier">高端打造</span>
+                </div>
+            </div>
+            
+            <h3 class="set-category">均衡实用套装</h3>
+            <div class="set-grid">
+                <div class="set-card" onclick="location.href='./page/detail.html?set=energy_2'">
+                    <img src="./static/img/logo/set-icon/energy2-set.png" alt="究极能量套装（2觉）" onerror="this.src='./static/img/logo/set-icon/default-set.png'">
+                    <h3>究极能量套装（2觉）</h3>
+                    <p class="set-alias">二觉续航套</p>
+                    <span class="set-tier">高端打造</span>
+                </div>
+                <div class="set-card" onclick="location.href='./page/detail.html?set=nature'">
+                    <img src="./static/img/logo/set-icon/nature-set.png" alt="造化自然套装" onerror="this.src='./static/img/logo/set-icon/default-set.png'">
+                    <h3>造化自然套装</h3>
+                    <p class="set-alias">均衡发展套</p>
+                    <span class="set-tier">中等打造</span>
+                </div>
+                <div class="set-card" onclick="location.href='./page/detail.html?set=spirit_orb'">
+                    <img src="./static/img/logo/set-icon/orb-set.png" alt="青丘灵珠套装" onerror="this.src='./static/img/logo/set-icon/default-set.png'">
+                    <h3>青丘灵珠套装（满珠）</h3>
+                    <p class="set-alias">灵珠buff套</p>
+                    <span class="set-tier">中等打造</span>
+                </div>
+                <div class="set-card" onclick="location.href='./page/detail.html?set=chaos'">
+                    <img src="./static/img/logo/set-icon/chaos-set.png" alt="混沌净化套装" onerror="this.src='./static/img/logo/set-icon/default-set.png'">
+                    <h3>混沌净化套装</h3>
+                    <p class="set-alias">强力CD切换套</p>
+                    <span class="set-tier">高端打造</span>
+                </div>
+            </div>
+            
+            <h3 class="set-category">新手/平民套装</h3>
+            <div class="set-grid">
+                <div class="set-card" onclick="location.href='./page/detail.html?set=hunt'">
+                    <img src="./static/img/logo/set-icon/hunt-set.png" alt="群猎美学套装" onerror="this.src='./static/img/logo/set-icon/default-set.png'">
+                    <h3>群猎美学套装</h3>
+                    <p class="set-alias">高速回血减伤套</p>
+                    <span class="set-tier">平民打造</span>
+                </div>
+                <div class="set-card" onclick="location.href='./page/detail.html?set=shadow'">
+                    <img src="./static/img/logo/set-icon/shadow-set.png" alt="潜影暗袭套装" onerror="this.src='./static/img/logo/set-icon/default-set.png'">
+                    <h3>潜影暗袭套装</h3>
+                    <p class="set-alias">影子机制手感套</p>
+                    <span class="set-tier">中等打造</span>
+                </div>
+                <div class="set-card" onclick="location.href='./page/detail.html?set=mage_normal'">
+                    <img src="./static/img/logo/set-icon/mage-set.png" alt="冥思者的魔力领域" onerror="this.src='./static/img/logo/set-icon/default-set.png'">
+                    <h3>冥思者的魔力领域</h3>
+                    <p class="set-alias">魔力领域套（普通模式）</p>
+                    <span class="set-tier">平民打造</span>
+                </div>
+                <div class="set-card" onclick="location.href='./page/detail.html?set=fate'">
+                    <img src="./static/img/logo/set-icon/fate-set.png" alt="天命者的气运" onerror="this.src='./static/img/logo/set-icon/default-set.png'">
+                    <h3>天命者的气运</h3>
+                    <p class="set-alias">技能重置套</p>
+                    <span class="set-tier">中等打造</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="./static/js/common.js"></script>
+    <script>
+        // 为套装卡片添加点击音效
+        const setCards = document.querySelectorAll('.set-card');
+        const navCards = document.querySelectorAll('.nav-card');
+        
+        function playSound(type) {
+            try {
+                const sound = new Audio(`./static/audio/${type}.mp3`);
+                sound.volume = 0.5;
+                sound.play();
+            } catch (e) {
+                console.log('音效加载失败:', e);
+            }
+        }
+        
+        setCards.forEach(card => {
+            card.addEventListener('mouseenter', () => playSound('hover'));
+            card.addEventListener('click', () => playSound('confirm'));
+        });
+        
+        navCards.forEach(card => {
+            card.addEventListener('mouseenter', () => playSound('hover'));
+        });
+    </script>
+</body>
+</html>
